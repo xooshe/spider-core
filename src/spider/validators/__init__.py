@@ -1,0 +1,5 @@
+from spider.validators.mobile_number import MobileNumberValidator
+from spider.validators.local_phone_number import LocalPhoneNumberValidator
+
+mobile_number_validator = MobileNumberValidator()
+local_phone_number_validator = LocalPhoneNumberValidator()

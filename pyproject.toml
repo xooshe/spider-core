@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spider-core"
+version = "0.1.0"
+description = "Reusable Django and DRF abstractions for models, admin, and API views."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["django", "drf", "models", "admin", "api", "serializers", "validators"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Framework :: Django",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "Django>=4.2,<6",
+  "djangorestframework>=3.15,<4",
+  "djangorestframework-simplejwt>=5.0",
+]
+urls = { Homepage = "https://github.com/<owner>/<repo>", Documentation = "https://github.com/<owner>/<repo>#readme" }
+
+[project.optional-dependencies]
+admin = ["django-import-export>=4.3", "django-unfold>=0.67"]
+storage = ["django-storages>=1.14", "boto3>=1.35"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["spider*"]
