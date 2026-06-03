@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "spider-core"
+name = "spider-core-x"
 version = "0.1.0"
 description = "Reusable Django and DRF abstractions for models, admin, and API views."
 readme = "README.md"
