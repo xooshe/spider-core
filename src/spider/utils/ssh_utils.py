@@ -1,6 +1,5 @@
 import paramiko
 import os
-import base64
 
 
 def generate_ssh_key_pair():

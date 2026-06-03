@@ -1,7 +1,5 @@
 from rest_framework import serializers
 
-from spider.dataclasses import PaginationRO
-
 
 class PaginationInfoSerializer(serializers.Serializer):
     page = serializers.IntegerField()
