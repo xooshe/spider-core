@@ -33,16 +33,28 @@ Install with optional storage helpers:
 pip install -e .[storage]
 ```
 
-Install directly from GitHub once the repository exists:
+Install directly from GitHub:
 
 ```bash
-pip install git+https://github.com/<owner>/<repo>.git
+pip install git+https://github.com/xooshe/spider-core.git
 ```
 
-Install from a private Python Artifactory repository once published:
+Install from PyPI:
 
 ```bash
-pip install --index-url https://<artifactory-host>/artifactory/api/pypi/<repo-name>/simple spider-core
+pip install spider-core-x
+```
+
+Install with optional admin helpers from PyPI:
+
+```bash
+pip install spider-core-x[admin]
+```
+
+Install with optional storage helpers from PyPI:
+
+```bash
+pip install spider-core-x[storage]
 ```
 
 ## CI / Publishing
@@ -50,22 +62,18 @@ pip install --index-url https://<artifactory-host>/artifactory/api/pypi/<repo-na
 A GitHub Actions workflow is included at `.github/workflows/publish.yml`. It:
 
 - builds the package on push and pull request
-- publishes artifacts to Artifactory when a `v*` tag is pushed
+- publishes to PyPI when a `v*` tag is pushed
 
-Set these repository secrets before publishing:
+No secrets are needed—the workflow uses OIDC trusted publishing for PyPI authentication.
 
-- `ARTIFACTORY_USERNAME`
-- `ARTIFACTORY_PASSWORD`
-- `ARTIFACTORY_REPOSITORY_URL`
-
-Create a release tag like:
+To publish a new version:
 
 ```bash
-git tag v0.1.0
-git push origin v0.1.0
+git tag v0.1.1
+git push origin v0.1.1
 ```
 
-Then the workflow will build and upload `spider-core` to your Artifactory repository.
+The workflow will automatically build and publish `spider-core-x` to PyPI.
 
 ## Usage
 
