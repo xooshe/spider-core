@@ -61,6 +61,7 @@ pip install spider-core-x[storage]
 
 A GitHub Actions workflow is included at `.github/workflows/publish.yml`. It:
 
+- runs unit tests on push and pull request
 - builds the package on push and pull request
 - publishes to PyPI when a `v*` tag is pushed
 
