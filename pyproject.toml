@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "spider-core-x"
-version = "0.0.2"
+version = "0.0.3"
 description = "Reusable Django and DRF abstractions for models, admin, and API views."
 readme = "README.md"
 requires-python = ">=3.11"
