@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+cd "$REPO_ROOT"
+
+PYPROJECT_FILE="pyproject.toml"
+if [[ ! -f "$PYPROJECT_FILE" ]]; then
+  echo "ERROR: $PYPROJECT_FILE not found in repository root." >&2
+  exit 1
+fi
+
+PYTHON_VERSION=$(python -c 'import sys; print("ok")' 2>/dev/null || true)
+if [[ -z "$PYTHON_VERSION" ]]; then
+  echo "ERROR: Python is required to run the pre-push hook." >&2
+  exit 1
+fi
+
+PROJECT_VERSION=$(python - <<'PY'
+import pathlib, sys, tomllib
+path = pathlib.Path('pyproject.toml')
+try:
+    data = tomllib.loads(path.read_text(encoding='utf-8'))
+except FileNotFoundError:
+    sys.exit(1)
+print(data['project']['version'])
+PY
+)
+
+if [[ -z "$PROJECT_VERSION" ]]; then
+  echo "ERROR: Unable to parse version from pyproject.toml." >&2
+  exit 1
+fi
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [[ "$remote_ref" == refs/tags/v* ]] && [[ "$local_sha" != "0000000000000000000000000000000000000000" ]]; then
+    tag_name="${remote_ref#refs/tags/}"
+    tag_version="${tag_name#v}"
+
+    if [[ "$PROJECT_VERSION" != "$tag_version" ]]; then
+      echo "ERROR: tag version mismatch for '$tag_name'" >&2
+      echo "  pyproject.toml version: $PROJECT_VERSION" >&2
+      echo "  tag version:           $tag_version" >&2
+      echo "Ensure the git tag uses 'v$PROJECT_VERSION' for releases or change the version in pyproject.toml to $tag_version." >&2
+      exit 1
+    fi
+  fi
+done
+
+exit 0

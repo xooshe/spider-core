@@ -67,7 +67,24 @@ A GitHub Actions workflow is included at `.github/workflows/publish.yml`. It:
 
 No secrets are needed—the workflow uses OIDC trusted publishing for PyPI authentication.
 
-To publish a new version:
+## Git Hooks
+
+This repository includes a versioned hook script at `.githooks/pre-push`, and the current checkout also installs the hook into `.git/hooks/pre-push`.
+The hook validates tag pushes so tags starting with `v` must match the version defined in `pyproject.toml` (without the `v` prefix).
+
+Install or reinstall the hook in a fresh clone with:
+
+```bash
+./scripts/install-git-hooks.sh
+```
+
+Alternatively, enable the repository hooks directory directly:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Use standard tag push syntax so the hook executes correctly:
 
 ```bash
 git tag v0.1.1
